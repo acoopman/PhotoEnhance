@@ -19,29 +19,17 @@ using namespace std;
 int main( int argc, char** argv )
 {
   
-  string text = "Dong";
   string outfile = "out.jpg";
-  cout << "the number of input arguments is = " << argc << endl;
-  for(int i = 0; i< argc; i++)
-    {
-      cout << argv[i] << endl;
-    }
-  
-  int temporary;
   if( argc < 2)
     {
-     cout <<" Usage: display_input InputToLoadAndDisplay" << endl;
+     cout <<" Usage: photo_enhance input_file.jpg" << endl;
      return -1;
     }
-  int switchs = 0;
-  if (argc >2)
-    {
-      switchs = atoi(argv[2]);
-    }
-  if(argc > 3)
-    {
-      outfile = argv[3];
-    }
+  //if(argc > 2)
+  //{
+  //  cout << "here\n";
+  //  outfile = argv[3];
+  //}
     Mat input;
     input = imread(argv[1], CV_LOAD_IMAGE_COLOR);   // Read the file
 
@@ -55,7 +43,7 @@ int main( int argc, char** argv )
     int height =  input.rows;
 
     cout << "Input size is "<< width << "x" << height << endl;
-
+    cout << "input file is " << argv[1] << " output file is " << outfile << endl;
 
     //conver the input to Black and white (gray input): -----------------------------------------------
     // Create a new matrix to hold the gray input
@@ -82,59 +70,24 @@ int main( int argc, char** argv )
     uint8_t  * out_image = output.data;
     uint8_t  * out_image2 = output2.data;
 
-#if 0
-    int  pixel;
-    int hscale = 1;
-    int vscale = 1;
-    //go through the image
-    if(switchs == 0)
-      {
-	flip_image(image, height, width);
-      }
-    else if(switchs==1)
-      {
-	flip_pixels(image, height, width);
-      }
-    else
-      {
-	domain_pixels(image, height, width);
-      }
+    domain_pixels(image, height, width);
+    imshow( "domain extension", gray );
 
-    string txt = "hey, I farted";
-    Point center(width/2, height/2);
-    circle(gray,center, 10, Scalar(255,0,0));
-    circle(gray,Point((width/2)+20,height/2), 10, Scalar(255,0,0));
-    circle(gray,Point((width/2)+10,(height/2)-20), 10, Scalar(255,0,0));
-    circle(gray,Point((width/2)+10,height/2-40), 10, Scalar(255,0,0));
-    circle(gray,Point((width/2)+10,height/2-60), 10, Scalar(255,0,0));
-    putText(gray, txt, Point(width/2-80,height/2+40), FONT_HERSHEY_SIMPLEX , 1, Scalar(255,0,0));
-    rectangle(gray, Point((width/2)-10,height/2-70), Point((width/2)+30,height/2+10), Scalar(255,0,0));
-#endif
-
-    //----------------------------
-    //Aidan define this function
-    //  black_out_even_lines(image, height, width);
-    //--------------------------
     find_sharpness(image, height, width);
-
-    //define this Aidan
     blur_image(image,out_image,height,width);
     imshow( "BLUR", gray );
-    //out_image2[] = image[]-out_image[] 
+    
     subtract_image(image,out_image,out_image2,height,width); //detail
     imshow( "DETAIL", output2 );
+    
     add_image(image,out_image2,out_image,height,width, 1.2);
     imshow( "EDGE ENHANCE", output );
     
     find_sharpness(out_image, height, width);
     
-    //imshow( "Gray OUT", gray );
-
-    //imshow( "OUTPUT2", output2 );
-    imwrite(outfile, gray);
+    imwrite(outfile, output);
     
     waitKey(0);
-
     
     return 0;
 }

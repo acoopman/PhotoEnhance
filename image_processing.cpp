@@ -17,7 +17,6 @@ void flip_image(uint8_t * image, int height, int width)
 }
 void flip_pixels(uint8_t * image, int height, int width)
 {
-  int temporary;
   int N = height*width;
   int pixel;
      for (int i = 0; i < (N); i++)
