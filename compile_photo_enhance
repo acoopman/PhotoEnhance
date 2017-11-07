@@ -1,0 +1,4 @@
+  g++  `pkg-config --cflags opencv` photo_enhance.cpp image_processing.cpp -o photo_enhance `pkg-config --libs opencv`
+
+
+
