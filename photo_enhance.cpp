@@ -73,7 +73,9 @@ int main( int argc, char** argv )
     domain_pixels(image, height, width);
     imshow( "domain extension", gray );
 
-    find_sharpness(image, height, width);
+    int sharpness = find_sharpness(image, height, width);
+    cout << "Sharpness before enhance = " << sharpness << endl;    
+
     blur_image(image,out_image,height,width);
     imshow( "BLUR", gray );
     
@@ -83,7 +85,8 @@ int main( int argc, char** argv )
     add_image(image,out_image2,out_image,height,width, 1.2);
     imshow( "EDGE ENHANCE", output );
     
-    find_sharpness(out_image, height, width);
+    sharpness = find_sharpness(out_image, height, width);
+    cout << "Sharpness after enhance = " << sharpness << endl;    
     
     imwrite(outfile, output);
     
