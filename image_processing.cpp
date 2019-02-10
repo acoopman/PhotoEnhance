@@ -148,28 +148,45 @@ void add_image(uint8_t * image, uint8_t * detail, uint8_t * out, int height, int
 }
 
 //----------------------------------------------------------------------------
-void find_sharpness(uint8_t * image, int height, int width)
+int find_sharpness(uint8_t * image, int height, int width)
 {
   int a;
   int b;
   int sharp;
-  int max_sharp=-255;
-  int min_sharp =255;
+  int max_sharp_x=-255;
+  int max_sharp_y=-255;
+  int sharpness;
+
   
+  //find partial dervitive for x
      for (int i = 0; i < height; i++)
        {
 	 for( int j =0; j< (width-1); j++)
 	   {
-	     a= image[i];
-	     b= image[i+1];
-	     sharp = a-b;
-	     if(sharp > max_sharp)
-	       max_sharp = sharp;
-	     if(sharp < min_sharp)
-	       min_sharp = sharp;
+	     a= image[j   +i*width];
+	     b= image[j+1 +i*width];
+	     sharp = b-a;
+	     if(abs(sharp) > max_sharp_x)
+	       max_sharp_x = abs(sharp);
 	   }
        }
-     cout << "max sharpness = " << max_sharp << endl;
-     cout << "min sharpness = " << min_sharp << endl;
 
+  //find partial dervitive for y
+     for (int i = 0; i < height-1; i++)
+       {
+	 for( int j =0; j< width; j++)
+	   {
+	     a= image[j+i*width];
+	     b= image[j+(i+1)*width];
+	     sharp = b-a;
+	     if(abs(sharp) > max_sharp_y)
+	       max_sharp_y = abs(sharp);
+	   }
+       }
+
+     //add the 2 partial derivatives
+     sharpness = max_sharp_x + max_sharp_y;
+
+     return sharpness;
+     
 }
