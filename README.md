@@ -13,3 +13,6 @@ Sharpness after  enhance = 478
 
 ![alt text](test_input.jpg)
 ![alt text](edge_enhance.jpg)
+
+The pipeline is as follows:
+![alt text](pipeline.png)
