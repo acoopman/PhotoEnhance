@@ -1,8 +1,10 @@
+//image_processing.cpp written by Aidan Coopman Feb 2019
+
 #include "image_processing.h"
 
 using namespace std;
 
-//-------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 void flip_image(uint8_t * image, int height, int width)
 {
   int temporary;
@@ -15,6 +17,7 @@ void flip_image(uint8_t * image, int height, int width)
 	 image[(N - 1) - i] = temporary;
        }
 }
+//----------------------------------------------------------------------------
 void flip_pixels(uint8_t * image, int height, int width)
 {
   int N = height*width;
@@ -25,29 +28,19 @@ void flip_pixels(uint8_t * image, int height, int width)
 	 image[i] = 255-pixel;
        }
 }
-
+//----------------------------------------------------------------------------
 void domain_pixels(uint8_t * image, int height, int width)
 {
   int min=256;
   int max=0;
-
   
   for (int i = 0; i<(height*width); i++)
     {
       if(image[i] < min)
-	{
-	  min = image[i];
-	}
+	min = image[i];
       if(image[i] > max)
-	{
-	  max = image[i];
-	}
+	max = image[i];
     }
-
-  
-
-  cout << "min = " << min << endl;
-  cout << "max = " << max << endl;
 
   for (int i = 0; i<(height*width); i++)
     {
@@ -60,22 +53,20 @@ void domain_pixels(uint8_t * image, int height, int width)
     {
       image[i] = image[i]*scale;
     }
-   
-}
+ }
 //---------------------------------------------------------------------------
 void black_out_even_lines(uint8_t * image, int height, int width)
 {
-  
-     for (int i = 0; i < height; i++)
-       {
-	 for( int j =0; j< width; j++)
-	   {
-	     if((i%2) == 0)
-	       image[j+i*width] = 0;
-	   }
-       }
+  for (int i = 0; i < height; i++)
+    {
+      for( int j =0; j< width; j++)
+	{
+	  if((i%2) == 0)
+	    image[j+i*width] = 0;
+	}
+    }
 }
-
+//----------------------------------------------------------------------------
 //    blur_image(image,out_image,height,width);
 void blur_image(uint8_t * image, uint8_t * out_image, int height, int width)
 {
@@ -84,12 +75,10 @@ void blur_image(uint8_t * image, uint8_t * out_image, int height, int width)
   int aa,bb,cc;
   int aaa,bbb,ccc;
 
-  
      for (int i = 0; i < height-3; i++)
        {
 	 for( int j =0; j< width-3; j++)
 	   {
-
 	     //this is first row of kernel
 	     a = image[j+i*width];
 	     b = image[j+i*width+1];
@@ -103,16 +92,15 @@ void blur_image(uint8_t * image, uint8_t * out_image, int height, int width)
 	     bbb = image[j+(i+2)*width+1];
 	     ccc = image[j+(i+2)*width+2];
 
+	     //simple avg filter
+	     //out_image[j+i*width]=(a+b+c+aa+bb+cc+aaa+bbb+ccc)/9;
 
-
-	     out_image[j+i*width]=(a+b+c+aa+bb+cc+aaa+bbb+ccc)/9;
+	     //gaussian filter
+	     out_image[j+i*width]=(a+2*b+c+2*aa+4*bb+2*cc+aaa+2*bbb+ccc)/16;
 	   }
        }
-     
 }
-
-// subtract_image(image,out_image,out_image2,height,width);
-//---------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 void subtract_image(uint8_t * in1, uint8_t * in2, uint8_t * out, int height, int width)
 {
   int a,b,c;
@@ -146,8 +134,7 @@ void add_image(uint8_t * image, uint8_t * detail, uint8_t * out, int height, int
 	   }
        }
 }
-
-//----------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 int find_sharpness(uint8_t * image, int height, int width)
 {
   int a;
@@ -157,7 +144,6 @@ int find_sharpness(uint8_t * image, int height, int width)
   int max_sharp_y=-255;
   int sharpness;
 
-  
   //find partial dervitive for x
      for (int i = 0; i < height; i++)
        {
@@ -171,7 +157,7 @@ int find_sharpness(uint8_t * image, int height, int width)
 	   }
        }
 
-  //find partial dervitive for y
+     //find partial dervitive for y
      for (int i = 0; i < height-1; i++)
        {
 	 for( int j =0; j< width; j++)
@@ -188,5 +174,5 @@ int find_sharpness(uint8_t * image, int height, int width)
      sharpness = max_sharp_x + max_sharp_y;
 
      return sharpness;
-     
 }
+//----------------------------------------------------------------------------
