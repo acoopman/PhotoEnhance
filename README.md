@@ -6,7 +6,7 @@ g++ photo_enhance.cpp image_processing.cpp -Ofast -fPIC -Wall -std=c++0x -I./ `p
 
 $ ./photo_enhance TestInput.jpg           
 Input size is 1024x683          
-input file is test_input.jpg output file is out.jpg         
+input file is TestInput.jpg output file is out.jpg         
 Sharpness before enhance = 361         
 Sharpness after  enhance = 478         
 
