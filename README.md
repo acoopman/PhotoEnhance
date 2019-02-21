@@ -14,15 +14,14 @@ Sharpness after  enhance = 478
 ![alt text](TestInput.jpg)
 ![alt text](EdgeEnhance.jpg)
 
-The pipeline is as follows:
 ![alt text](./images/car.png)
-![alt text](./images/car_enhanced.png)
+![alt text](./images/car_enhanced.jpg)
 
-![alt text](./images/eyeball.jpg)
+![alt text](./images/eyeball_gray.jpg)
 ![alt text](./images/eyeball_enhanced.jpg)
 
 ![alt text](./images/girl.jpg)
 ![alt text](./images/girl_enhanced.jpg)
 
-![alt text](./images/underwater.jpg)
+![alt text](./images/underwater_gray.jpg)
 ![alt text](./images/underwater_enhanced.jpg)
