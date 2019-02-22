@@ -12,7 +12,7 @@ Sharpness after  enhance = 478
 
 
 ![alt text](TestInput.jpg)
-![alt text](EdgeEnhance.jpg)
+![alt text](./images/EdgeEnhance.jpg)
 
 ![alt text](./images/car.png)
 ![alt text](./images/car_enhanced.jpg)
